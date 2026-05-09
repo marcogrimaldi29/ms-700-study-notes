@@ -438,4 +438,7 @@ For organizations with **multiple Entra ID tenants** (e.g., after mergers):
 
 ---
 
-[📘 ← Prerequisites](/ms-700-study-notes/00-teams-fundamentals/) · [💬 Next: Domain 2 — Teams, Channels, Chats & Apps →](/ms-700-study-notes/02-teams-channels-chats-apps/)
+[← Previous: Teams Fundamentals](/ms-700-study-notes/00-teams-fundamentals/){: .btn .btn-outline .fs-5 .mr-2 }
+[Next → 02 — Teams, Channels, Chats & Apps](/ms-700-study-notes/02-teams-channels-chats-apps/){: .btn .btn-primary .fs-5 }
+
+[🏠 Home](/ms-700-study-notes/){: .btn .btn-outline .fs-3 }

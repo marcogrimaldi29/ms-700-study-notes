@@ -298,4 +298,7 @@ Control **how apps appear** for users:
 
 ---
 
-[🔧 ← Domain 1](/ms-700-study-notes/01-configure-manage-environment/) · [📞 Next: Domain 3 — Meetings & Calling →](/ms-700-study-notes/03-meetings-and-calling/)
+[← Previous: Configure & Manage Environment](/ms-700-study-notes/01-configure-manage-environment/){: .btn .btn-outline .fs-5 .mr-2 }
+[Next → 03 — Meetings & Calling](/ms-700-study-notes/03-meetings-and-calling/){: .btn .btn-primary .fs-5 }
+
+[🏠 Home](/ms-700-study-notes/){: .btn .btn-outline .fs-3 }

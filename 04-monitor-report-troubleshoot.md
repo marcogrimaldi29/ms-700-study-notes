@@ -294,4 +294,7 @@ flowchart TD
 
 ---
 
-[📞 ← Domain 3](/ms-700-study-notes/03-meetings-and-calling/) · [⚡ Next: Quick Reference Cheatsheet →](/ms-700-study-notes/05-quick-reference-cheatsheet/)
+[← Previous: Meetings & Calling](/ms-700-study-notes/03-meetings-and-calling/){: .btn .btn-outline .fs-5 .mr-2 }
+[Next → 05 — Quick Reference Cheatsheet](/ms-700-study-notes/05-quick-reference-cheatsheet/){: .btn .btn-primary .fs-5 }
+
+[🏠 Home](/ms-700-study-notes/){: .btn .btn-outline .fs-3 }
