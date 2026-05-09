@@ -267,4 +267,6 @@ Set-TeamChannel -GroupId <GroupId> -CurrentDisplayName "General" -NewDisplayName
 
 ---
 
-[🔧 Next: Domain 1 — Configure & Manage a Teams Environment →](/ms-700-study-notes/01-configure-manage-environment/)
+[Next → 01 — Configure & Manage a Teams Environment](/ms-700-study-notes/01-configure-manage-environment/){: .btn .btn-primary .fs-5 }
+
+[🏠 Home](/ms-700-study-notes/){: .btn .btn-outline .fs-3 }

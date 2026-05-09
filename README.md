@@ -55,11 +55,18 @@ pie title Exam Domain Weights of the MS-700 (official ranges)
 flowchart LR
     MS900["☁️ MS-900\nMicrosoft 365\nFundamentals\n(Recommended)"]
     MS700["🏛️ MS-700\nManaging\nMicrosoft Teams\n(This Exam)"]
-    BADGE["🏅 Teams\nAdministrator\nAssociate"]
+    BADGE700["🏅 Teams\nAdministrator\nAssociate"]
+    MS721["📞 MS-721\nCollaboration\nCommunications\nSystems Engineer"]
+    BADGE721["🏅 Collaboration\nCommunications\nSystems Engineer\nAssociate"]
 
     MS900 -->|Foundation| MS700
-    MS700 --> BADGE
+    MS900 -->|Foundation| MS721
+    MS700 --> BADGE700
+    MS721 --> BADGE721
+    BADGE700 -.->|"Complementary\ncertification"| MS721
 ```
+
+> 💡 **MS-700** focuses on **Teams administration** (policies, governance, compliance). **[MS-721](https://learn.microsoft.com/en-us/credentials/certifications/m365-collaboration-communications-systems-engineer/)** focuses on **Teams Phone, meetings infrastructure, and certified devices** (SBCs, Teams Rooms, call quality). Together they cover the full Microsoft Teams certification spectrum.
 
 ---
 

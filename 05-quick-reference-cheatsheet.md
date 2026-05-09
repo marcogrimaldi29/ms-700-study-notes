@@ -251,4 +251,6 @@ Get-CsOnlineUser -Filter {Department -eq "Sales"} | Grant-CsTeamsMeetingPolicy -
 
 ---
 
-[📊 ← Domain 4](/ms-700-study-notes/04-monitor-report-troubleshoot/) · [📘 Back to Home →](/ms-700-study-notes/)
+[← Previous: Monitor, Report & Troubleshoot](/ms-700-study-notes/04-monitor-report-troubleshoot/){: .btn .btn-outline .fs-5 .mr-2 }
+
+[🏠 Home](/ms-700-study-notes/){: .btn .btn-outline .fs-3 }

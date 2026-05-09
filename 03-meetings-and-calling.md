@@ -309,4 +309,7 @@ Distribute incoming calls to a group of agents:
 
 ---
 
-[💬 ← Domain 2](/ms-700-study-notes/02-teams-channels-chats-apps/) · [📊 Next: Domain 4 — Monitor, Report & Troubleshoot →](/ms-700-study-notes/04-monitor-report-troubleshoot/)
+[← Previous: Teams, Channels, Chats & Apps](/ms-700-study-notes/02-teams-channels-chats-apps/){: .btn .btn-outline .fs-5 .mr-2 }
+[Next → 04 — Monitor, Report & Troubleshoot](/ms-700-study-notes/04-monitor-report-troubleshoot/){: .btn .btn-primary .fs-5 }
+
+[🏠 Home](/ms-700-study-notes/){: .btn .btn-outline .fs-3 }
