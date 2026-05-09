@@ -9,7 +9,8 @@
 > - 📅 **Notes Version:** 2026
 > - 🌐 **Published site:** [📘 MS-700 Study Notes](https://marcogrimaldi29.com/ms-700-study-notes/)
 > - ✍️ **Author:** [Marco Grimaldi](https://www.linkedin.com/in/marco-grimaldi29/)
-> - 🔗 **Companion repos:** [📘 AZ-305 Study Notes](https://marcogrimaldi29.com/az-305-study-notes/) · [📘 AZ-104 Study Notes](https://marcogrimaldi29.com/az-104-study-notes/)
+> - 🛬 **Main Landing Page:** [🛬 Landing Page: Study Notes](https://marcogrimaldi29.com/study-notes/)
+> - 🏅 **Cert Review Article**: [🏅 Cert Review: MS-700 – Microsoft 365 Certified: Teams Administrator Associate](https://marcogrimaldi29.com/microsoft-ms-700/)
 ---
 
 ## 📋 Exam At-a-Glance
