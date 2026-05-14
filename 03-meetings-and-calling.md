@@ -17,7 +17,7 @@ mermaid: true
 
 ```mermaid
 mindmap
-  root((Domain 3\n15–20%))
+  root((Domain 3 15–20%))
     Meetings & Events
       Meeting Types
       Meeting Settings

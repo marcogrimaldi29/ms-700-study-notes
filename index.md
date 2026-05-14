@@ -43,10 +43,10 @@ mermaid: true
 ```mermaid
 %%{init: {"theme":"dark","themeVariables":{"primaryTextColor":"#ffffff","secondaryTextColor":"#e8eaed","pie1":"#6264a7","pie2":"#8b5cf6","pie3":"#a78bfa","pie4":"#c4b5fd"}}}%%
 pie title MS-700 — Official Exam Domain Weights
-    " Configure & Manage Teams Environment (40–45%)" : 42
-    " Manage Teams, Channels, Chats & Apps (20–25%)" : 22
-    " Manage Meetings & Calling (15–20%)" : 18
-    " Monitor, Report & Troubleshoot (15–20%)" : 18
+    " Configure & Manage Teams Environment (40–45%)" : 40
+    " Manage Teams, Channels, Chats & Apps (20–25%)" : 20
+    " Manage Meetings & Calling (15–20%)" : 20
+    " Monitor, Report & Troubleshoot (15–20%)" : 20
 ```
 
 | # | Domain | Weight | Key Focus Areas |

@@ -17,7 +17,7 @@ mermaid: true
 
 ```mermaid
 mindmap
-  root((Domain 2\n20–25%))
+  root((Domain 2 20–25%))
     Create & Manage Teams
       Advisor for Teams
       Create from Admin Center

@@ -17,7 +17,7 @@ mermaid: true
 
 ```mermaid
 mindmap
-  root((Domain 1\n40–45%))
+  root((Domain 1 40–45%))
     Network Settings
       Network Planner
       Bandwidth Calculation
