@@ -17,7 +17,7 @@ mermaid: true
 
 ```mermaid
 mindmap
-  root((Domain 4\n15–20%))
+  root((Domain 4 15–20%))
     Monitor & Report
       Call Quality Dashboard
       Real-Time Analytics
