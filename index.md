@@ -164,6 +164,14 @@ These notes are maintained by **[Marco Grimaldi](https://www.linkedin.com/in/mar
 
 ---
 
+## ⭐ Support This Project
+
+If these notes helped you study for the MS-700 or saved you some prep time, consider giving the repository a **star on GitHub** — it helps others discover these resources and keeps the motivation going!
+
+[⭐ Star on GitHub](https://github.com/marcogrimaldi29/ms-700-study-notes){: .btn .btn-outline .fs-5 .mb-4 .mb-md-0 }
+
+---
+
 ## 📈 Analytics
 
 This site uses **[Umami](https://umami.is/)** for privacy-friendly analytics.

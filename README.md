@@ -151,6 +151,12 @@ The site is continuously updated and based on my personal study notes and experi
 
 ---
 
+## ⭐ Support This Project
+
+If these notes helped you prepare for the MS-700 or saved you some study time, consider giving the repo a **⭐ star on GitHub** — it helps others find these resources and keeps the motivation going!
+
+---
+
 ## 📈 Analytics
 
 This site uses **[Umami](https://umami.is/)** for privacy-friendly analytics.
