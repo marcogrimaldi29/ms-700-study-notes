@@ -46,6 +46,8 @@ mermaid: true
 | DLP, retention, sensitivity labels, eDiscovery | **Microsoft Purview** (compliance.microsoft.com) |
 | Threat policies (Safe Links, Safe Attachments) | **Microsoft Defender** (security.microsoft.com) |
 | Self-help diagnostics | **M365 Admin Center** → Support |
+| Teams client crashes, launch and update failures | **Teams Admin Center** → Teams client health |
+| Rollout planning, bandwidth planning | **Teams Admin Center** → Planning (Teams Advisor, Network planner) |
 | Call Quality Dashboard | **cqd.teams.microsoft.com** |
 | Audit logs | **Microsoft Purview** → Audit |
 
@@ -185,7 +187,9 @@ Get-CsOnlineUser -Filter {Department -eq "Sales"} | Grant-CsTeamsMeetingPolicy -
 | "Teams Phone Resource Account license has a cost" | **False** — it's a **free** license |
 | "Expiration policies auto-delete groups immediately" | **False** — owners get notifications at **30, 15, and 1 day** before expiration |
 | "Webinars don't require registration" | **False** — registration is **required** for webinars |
-| "Copilot works without transcription" | **False** — Copilot in meetings **requires transcription** to be enabled |
+| "Copilot in meetings always needs a saved transcript" | **False** — **Only during the meeting** uses temporary speech-to-text; a transcript is needed to use Copilot **after** the meeting |
+| "App permission policies control who can use each app" | **Outdated** — **app centric management** (app assignments) replaced them |
+| "Use a connector to post webhook alerts to a channel" | **False** — Office 365 connectors were **retired in May 2026**; use **Workflows** |
 | "Information barriers use group membership" | **False** — IB uses **user segments** based on Entra ID attributes |
 
 ---
@@ -234,7 +238,8 @@ Get-CsOnlineUser -Filter {Department -eq "Sales"} | Grant-CsTeamsMeetingPolicy -
 - [ ] Do I know the **key limits** (team size, channel counts, meeting capacity)?
 - [ ] Can I explain how **sensitivity labels** affect Teams?
 - [ ] Do I understand **B2B direct connect** for shared channels?
-- [ ] Am I clear on **Copilot** requirements (license + transcription)?
+- [ ] Am I clear on **Copilot** requirements (license, meeting policy Copilot setting, transcript for use after the meeting)?
+- [ ] Can I control app access with **app assignments** (Everyone / Specific users or groups / No one)?
 
 ---
 

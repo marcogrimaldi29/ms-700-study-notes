@@ -153,14 +153,14 @@ Admin-created templates that pre-configure meeting options:
 |---------|-------------|
 | **During meeting** | Real-time summaries, catch-up, suggested actions |
 | **After meeting** | Meeting recap, action items, follow-up suggestions |
-| **Transcript required** | Copilot needs transcription enabled to function |
+| **Transcript options** | **Only during the meeting** uses temporary speech-to-text; **During and after the meeting** needs a transcript |
 | **Policy control** | Admins control Copilot availability via meeting policies |
 
 > **⚠️ Exam Caveat:**
 > - **Town halls** replaced **Live Events** — know the migration path and feature differences
 > - **Webinars** require **registration**; **meetings** have optional registration; **town halls** have no registration
 > - **Meeting templates** can **lock** settings so organizers cannot change them — this is different from meeting policies
-> - **Copilot in meetings** requires **transcription to be enabled** — if transcription is off, Copilot cannot summarize
+> - **Copilot in meetings** can run **without a saved transcript** (Only during the meeting); using Copilot **after** the meeting requires transcription
 > - **View-only** meetings support up to 20,000 attendees but participants in view-only cannot interact
 
 ---

@@ -19,12 +19,14 @@ mermaid: true
 mindmap
   root((Domain 2 20–25%))
     Create & Manage Teams
-      Advisor for Teams
+      Teams Advisor
       Create from Admin Center
       Create from M365 Group
       Team Templates
       Template Policies
       Membership & Roles
+      Manage Teams in Admin Center
+      Teams Settings
       Privacy & Sensitivity
       Frontline Teams
     Channels & Chats
@@ -37,7 +39,7 @@ mindmap
     Apps
       Org-wide App Settings
       App Setup Policies
-      App Permission Policies
+      App Assignments
       App Store Customization
       Custom App Upload
       Extensibility Options
@@ -47,12 +49,15 @@ mindmap
 
 ## 🏗️ 2.1 Create and Manage Teams
 
-### Advisor for Teams
+### Teams Advisor
 
-A built-in tool in the Teams admin center that helps plan a Teams rollout:
-- Creates a **deployment team** with channels for each workload
-- Provides **Planner tasks** for rollout steps
-- Covers: Chat, Teams & Channels, Meetings & Conferencing, and Calling
+A built-in tool in the Teams admin center (**Planning** → **Teams Advisor**) that helps plan a Teams rollout. Microsoft Learn still calls it **Advisor for Teams**.
+- Runs a **tenant readiness assessment** of your Microsoft 365 environment
+- Creates a **Deployment team** with a channel for each workload you choose
+- Each workload gets a **Planner plan** of rollout tasks and a **Forms user survey**
+- Plans: **Chat, teams, channels, and apps**; **Meetings and conferencing**; **Skype for Business upgrade**; **Education** (education tenants only)
+- Requires **Teams, Forms, and Planner** licenses (at least **Microsoft 365 Business Basic**)
+- Any licensed user can open it, but only a **Teams Administrator** or **Global Administrator** can open the tenant readiness assessments
 
 ### Ways to Create a Team
 
@@ -97,6 +102,37 @@ Pre-built structures with predefined channels, tabs, and apps:
 | **Max members** | 25,000 per team |
 | **Org-wide team** | Auto-includes all users; max 10,000 members (5 org-wide teams limit) |
 
+### Manage a Team in the Teams Admin Center
+
+**Teams admin center** → **Teams** → **Manage teams** lists every team in the organization, with columns for channel counts, members, owners, guests, privacy, status, sensitivity, group ID, and expiration date.
+
+| Action | How |
+|--------|-----|
+| **Add a team** | **Add** → name, description, privacy, sensitivity |
+| **Edit a team** | **Edit** → name, description, privacy, sensitivity, member permissions, guest permissions, fun settings |
+| **Members and channels** | Open the team's profile page → add or remove members and owners, add or remove channels (not the General channel) |
+| **Archive** | Select the team → **Archive** (read-only) |
+| **Restore a deleted team** | **View deleted teams** → select the team → **Restore** |
+| **Renew an expiring team** | Filter by **Expiration date** → select the team → **Renew** |
+
+Changes to Microsoft 365 group settings (name, description, photo, privacy, sensitivity, membership) are recorded in the audit log. Changes to Teams-specific settings are posted to the team's **General** channel.
+
+### Teams Environment Settings
+
+**Teams admin center** → **Teams** → **Teams settings** holds org-wide settings that apply to **every team** in the organization:
+
+| Setting Group | Controls |
+|---------------|----------|
+| **Notifications and feeds** | Whether suggested feeds can appear in the activity feed |
+| **Tagging** | Who can manage tags, suggested and custom tags, whether Shifts can apply tags |
+| **Email integration** | Whether users can email a channel address; allowed SMTP domains |
+| **Files** | Third-party cloud storage (Citrix files, Dropbox, Box, Google Drive, Egnyte) |
+| **Organization** | Whether users see the **Organization** tab (org chart from Entra ID) |
+| **Devices** | Surface Hub email, content PIN for Skype for Business users |
+| **Search by name** | Scope directory search using an **Exchange address book policy** |
+| **Safety and communications** | Role-based chat permissions (supervised chat) |
+| **Shared channels** | Link to your support request page for external collaboration |
+
 ### Privacy and Sensitivity Settings
 
 | Setting | Options |
@@ -120,6 +156,9 @@ Pre-built structures with predefined channels, tabs, and apps:
 > - **Org-wide teams** are limited to **10,000 members** and **5 teams** per tenant
 > - **Template policies** determine which templates users see — not which templates exist
 > - When a team is created, a **M365 group**, **SharePoint site**, **Exchange mailbox**, and **OneNote notebook** are all auto-provisioned
+> - **Teams Advisor** is the study guide's name for **Advisor for Teams** — same tool, under **Planning** in the Teams admin center
+> - **Teams settings** are org-wide (every team); **Teams policies** are assigned to users
+> - Turning on **Search by name** hides the **Search teams** box and public team listing, and disables `/join`
 
 ---
 
@@ -156,7 +195,7 @@ flowchart TD
 | Setting | Description |
 |---------|-------------|
 | **Moderation** | Control who can start new posts (owners vs. everyone) |
-| **Connectors** | Incoming webhooks and third-party integrations |
+| **Workflows** | Post alerts and webhook messages to the channel (Office 365 connectors were retired in May 2026) |
 | **Tabs** | Pin apps, documents, or websites at the top |
 | **Auto-favorite** | Show channel in members' channel list by default |
 
@@ -201,41 +240,63 @@ flowchart TD
 ```mermaid
 flowchart TD
     ORG["🏢 Org-wide App Settings\n(Master switch)"]
-    PERM["🔐 App Permission Policies\n(Allow/Block apps)"]
+    ASSIGN["🔐 App Status & Assignments\n(Allow/Block, who can use each app)"]
     SETUP["📋 App Setup Policies\n(Pin & install apps)"]
     USER["👤 User Experience"]
 
-    ORG --> PERM --> SETUP --> USER
+    ORG --> ASSIGN --> SETUP --> USER
 ```
 
 ### Org-wide App Settings
 
+**Teams admin center** → **Teams apps** → **Manage apps** → **Actions** → **Org-wide app settings**:
+
 | Setting | Description |
 |---------|-------------|
-| **Third-party apps** | Master toggle — enable or disable all third-party apps |
-| **Custom apps** | Allow or block uploading of custom (LOB) apps |
-| **Default apps** | Microsoft-published apps (always available unless blocked) |
+| **Tailored apps** | Show the tailored frontline app experience to users with an **F license** |
+| **Microsoft apps** | Let users install and use available Microsoft apps by default |
+| **Third-party apps** | One control for the availability of all new and existing third-party apps |
+| **Custom apps** | Let users install and use available custom (LOB) apps by default |
 
-### App Permission Policies
+**Built-in Teams agents** such as **Facilitator** and **Channel Agent** aren't controlled by the Microsoft apps setting. You manage them on **Teams apps** → **Built-in Teams agents**.
 
-Control **which apps** users can access:
+### App Assignments (App Centric Management)
 
-| Scope | Options |
-|-------|---------|
-| **Microsoft apps** | Allow all, block all, or allow/block specific apps |
-| **Third-party apps** | Allow all, block all, or allow/block specific apps |
-| **Custom apps** | Allow all, block all, or allow/block specific apps |
+**App centric management** replaces **app permission policies**, which are deprecated. Tenants have been migrated automatically since **April 2025**, and a migration **can't be reverted**. Instead of building policies, you set **who can use each app**:
+
+| Availability | Who Gets the App | Old Equivalent |
+|--------------|------------------|----------------|
+| **Everyone** | All users in the org, new users, and guests | App allowed in the Global permission policy |
+| **Specific users or groups** | Only the selected users and groups (no guests) | Custom permission policy |
+| **No one** | Nobody | Blocked app |
+
+- Supported groups: **security groups**, **Microsoft 365 groups**, **dynamic membership groups**, **nested groups**, and **distribution lists**
+- Auto-migration creates **one security group per custom permission policy** and adds that policy's users to it
+- Bulk changes use PowerShell (`Update-M365TeamsApp`); the admin center can't change availability in bulk
 
 ### App Setup Policies
 
-Control **how apps appear** for users:
+Control **how apps appear** for users (**Teams apps** → **Setup policies**):
 
 | Setting | Description |
 |---------|-------------|
-| **Pinned apps** | Force-pin apps to the Teams sidebar (app bar) |
-| **Installed apps** | Pre-install apps (users see them without manual install) |
-| **User pinning** | Allow or prevent users from pinning their own apps |
-| **App bar order** | Set the order of pinned apps |
+| **Pinned apps** | Pin apps and set their order in the **app bar**, **messaging extensions**, **meeting extensions**, and **calling extensions** |
+| **Installed apps** | Install apps for users (in app centric management tenants, installing moves to the app centric management UI) |
+| **User pinning** | Allow users to pin their own apps and change the order (admin pins always come first) |
+| **Upload custom apps** | Allow the user to upload custom app packages |
+
+Built-in policies: **Global (Org-wide default)** and **FirstlineWorker** (can't be customized).
+
+### Blocking Apps
+
+| Scope | How |
+|-------|-----|
+| **One app, whole org** | **Manage apps** → select the app → **Block**, or set its availability to **No one** |
+| **One app, some users** | Set availability to **Specific users or groups** |
+| **All third-party apps** | **Org-wide app settings** → turn off third-party apps |
+| **Microsoft-built apps** | App centric management can also block apps created by Microsoft |
+
+Users can **request** an app that isn't available to them, and admins get a notification to review it.
 
 ### App Consent and Permissions
 
@@ -258,12 +319,13 @@ Control **how apps appear** for users:
 
 | Option | Description | Best For |
 |--------|-------------|----------|
+| **Apps (personal apps & bots)** | Full apps pinned to the app bar, or conversational bots | Q&A, notifications, line-of-business tools |
 | **Tabs** | Embed web apps or content in channels/chats | Dashboards, tools, documents |
+| **Meeting apps** | Apps that enhance the meeting experience | Polls, Q&A, whiteboarding |
 | **Messaging extensions** | Search and share content from within compose box | Quick lookups, ticket insertion |
-| **Bots** | Conversational apps for automation | Q&A, notifications, workflows |
-| **Connectors** | Push notifications from external services | Alerts from Jira, GitHub, etc. |
-| **Workflows** | Power Automate flows triggered in Teams | Approvals, notifications |
-| **Meeting extensions** | Apps that enhance the meeting experience | Polls, Q&A, whiteboarding |
+| **Workflows** | Power Automate flows in Teams, including the **When a Teams webhook request is received** trigger | Approvals, alerts from external services |
+
+**Office 365 connectors** in Teams, including connector-based **incoming webhooks**, were **retired in May 2026**. Use the **Workflows** app instead.
 
 ### Upload Custom Apps
 
@@ -274,8 +336,11 @@ Control **how apps appear** for users:
 | **Microsoft Partner Center** | Publish to the public Teams app store |
 
 > **⚠️ Exam Caveat:**
-> - **Org-wide settings override** permission and setup policies — if third-party apps are disabled org-wide, no permission policy can allow them
-> - **App permission policies** control what apps users CAN use; **app setup policies** control what apps users SEE by default
+> - **Org-wide settings override** app assignments and setup policies — if third-party apps are disabled org-wide, no assignment can allow them
+> - **App assignments** (app centric management) control what apps users CAN use; **app setup policies** control what apps users SEE by default
+> - **App permission policies** are deprecated — app centric management replaced them, and the migration can't be undone
+> - Guests can't use an app that is assigned to **Specific users or groups**, even if they're added to it
+> - **Connectors** are retired — if a scenario needs alerts posted to a channel, the answer is **Workflows**
 > - **Custom app upload** (sideloading) must be enabled in **both** org-wide settings AND the user's app setup policy
 > - **Purchasing apps** from the Teams store requires **admin approval** if cost is involved — configured in the Teams admin center
 
@@ -288,7 +353,11 @@ Control **how apps appear** for users:
 | Need a channel visible only to 5 team members | **Private channel** |
 | Need to collaborate with users in another M365 tenant | **Shared channel** (B2B direct connect) |
 | Standardize new team structures across the org | **Team templates** + template policies |
-| Block a specific third-party app for all users | **App permission policy** — block the specific app |
+| Block a specific third-party app for all users | **Manage apps** — block the app (or set availability to **No one**) |
+| Make an app available only to the HR department | **App assignment** — availability **Specific users or groups** |
+| Post monitoring alerts into a channel | **Workflows** with the Teams webhook trigger (connectors are retired) |
+| Plan a Teams rollout with Planner tasks per workload | **Teams Advisor** |
+| Rename a team and change it to private as an admin | **Teams admin center** → Manage teams → **Edit** |
 | Force-pin an app to every user's sidebar | **App setup policy** — add to pinned apps |
 | Prevent users from deleting their sent messages | **Messaging policy** — disable delete sent messages |
 | Deploy teams for 5,000 retail store workers | **Frontline team** deployment |
