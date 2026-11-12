@@ -28,7 +28,7 @@
 
 ## 📊 Official Domain Breakdown
 
-> ⚠️ **Official ranges** from the Microsoft study guide (updated April 2026)
+> ⚠️ **Official ranges** from the Microsoft study guide (updated October 27, 2026)
 
 ```mermaid
 pie title Exam Domain Weights of the MS-700 (official ranges)

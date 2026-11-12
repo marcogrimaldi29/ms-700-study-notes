@@ -37,9 +37,9 @@ mindmap
       Self-Help Diagnostics
       Installation Issues
       Update Issues
-      Client Health
+      Teams Client Health
       Sign-In Issues
-      Copilot Issues
+      Copilot & AI Issues
       Meeting Join Issues
 ```
 
@@ -169,20 +169,31 @@ Configure notifications for specific events in **Teams admin center** → Notifi
 
 ### Client-Side Logs
 
-| Log Type | Location (Windows) | Purpose |
-|----------|-------------------|---------|
-| **Desktop client logs** | `%appdata%\Microsoft\Teams\logs.txt` | General client activity and errors |
-| **Media logs** | `%appdata%\Microsoft\Teams\media-stack\*.blog` | Audio, video, and screen sharing diagnostics |
-| **Debug logs** | Ctrl+Alt+Shift+1 in Teams | Generate debug log package |
-| **Calling logs** | Exported from call history | Per-call quality details |
+Collect logs **as soon as the issue happens**. They're saved to the user's **Downloads** folder:
+
+| How to Collect | Client | What You Get |
+|----------------|--------|--------------|
+| Teams icon in the system tray → **Collect support files**, or **Ctrl+Alt+Shift+1** | Windows | **MS Teams Support Log Files** (media, signaling, and platform logs) and **PROD-WebLogs** (application event logs) |
+| **Help** → **Collect support files**, or **Option+Command+Shift+1** | Mac | The same two sets of logs |
+| The same keyboard shortcut | Teams on the web | **Web logs** only |
+| Teams admin center → user → **Client health** → **Request client logs** | Windows (non-VDI) and Mac | Logs collected **remotely**, without interrupting the user (see [Teams Client Health](#teams-client-health-in-the-teams-admin-center) below) |
+
+- **Media and signaling logs are encrypted** — only Microsoft Support can read them; web logs are plain text
+- **Media logging is always on**, so the old admin policy that controlled it is deprecated
+- Log times are in **UTC** — tell Microsoft Support the local time the issue happened
+- The **Support Log Files** folder must be **zipped** before you upload it; the web logs are already compressed
 
 ### Clear Teams Client Cache
 
-Steps to clear the cache (Windows):
-1. Fully quit Teams (right-click tray icon → Quit)
-2. Navigate to `%appdata%\Microsoft\Teams`
-3. Delete contents of: `Cache`, `blob_storage`, `databases`, `GPUcache`, `IndexedDB`, `Local Storage`, `tmp`
-4. Restart Teams
+Clearing the cache is a **targeted** fix for a small number of local client problems, **not** a general first step. Don't clear it for **chat or channel problems** (missing messages, chat history not loading, a team or channel not appearing, wrong notification or unread counts): it doesn't fix them, and it **deletes the diagnostic logs** needed to find the cause.
+
+| Client | How to Clear the Cache |
+|--------|------------------------|
+| **Windows** (option 1) | Settings → **Apps** → **Installed apps** → **Microsoft Teams** → **⋯** → **Advanced options** → **Reset** (also deletes the user's Teams personalization settings) |
+| **Windows** (option 2) | Quit Teams, delete everything in `%userprofile%\appdata\local\Packages\MSTeams_8wekyb3d8bbwe\LocalCache\Microsoft\MSTeams`, then restart Teams |
+| **Mac** | Quit Teams, delete `~/Library/Group Containers/UBF8T346G9.com.microsoft.teams` and `~/Library/Containers/com.microsoft.teams2`, then restart Teams |
+
+The first start after clearing the cache takes longer than usual while Teams rebuilds it.
 
 ### Self-Help Diagnostics
 
@@ -200,18 +211,32 @@ Available in **Microsoft 365 admin center** → Support → Run diagnostics:
 
 | Issue | Troubleshooting Steps |
 |-------|----------------------|
-| **Installation fails** | Check .NET prerequisites, run as admin, check proxy/firewall |
-| **Updates not applying** | Verify update policy, check network connectivity to CDN |
-| **New Teams migration** | Check update policy settings, OS requirements |
-| **Side-by-side install** | Classic Teams and new Teams can coexist during transition |
+| **Installation fails** | Check the OS version and **WebView2** are current, and that device policies don't block the Teams **MSIX** package or the Teams Meeting add-in (MSI) |
+| **Updates not applying** | Check **Delivery Optimization**, which powers Teams automatic updates (Download Mode 100, Bypass, isn't supported), and network access |
+| **Bulk deployment** | Run **teamsbootstrapper.exe** (through Intune, Configuration Manager, or similar) to provision the Teams MSIX for **all users** on a computer; an offline installer is also available |
+| **Classic Teams** | **Retired** — its end of availability was **July 1, 2025**. Users who can't run new Teams can use Teams on the web |
 
-### Client Health in Teams Admin Center
+### Teams Client Health in the Teams Admin Center
 
-| Feature | Description |
-|---------|-------------|
-| **Teams devices health** | Monitor device status, connectivity, and peripherals |
-| **Client version report** | See which Teams client versions are in use |
-| **App health** | Monitor Teams app performance metrics |
+The **Teams client health** dashboard (Teams admin center → **Teams client health**) gives admins data, insights, and fixes for Teams app problems before users escalate them:
+
+| Area | Shows |
+|------|-------|
+| **Client health** widget | Devices with **crashes** and **launch failures** per day over the last **28 days** (Windows non-VDI and Mac) |
+| **Top issues** | Devices that reported **crashes**, **launch failures**, and **update failures** in the last 7 and 28 days |
+| **Issues** table | Each issue with an **Insight** (likely cause), impacted devices and users, and **Suggested actions** |
+| **Issue details** | Affected users with client version, **version status** (for example **Outdated**), update ring, and device |
+
+For a single user, go to **Users** → **Manage users** → select the user → **Client health** tab. There you can **Request client logs** to collect diagnostic logs remotely without interrupting the user (Windows non-VDI and Mac). The Global Administrator, Teams Administrator, Teams Communications Support Engineer, and Teams Communications Support Specialist roles can use it.
+
+| Insight Example | Fix |
+|-----------------|-----|
+| **Launch failure** — can't reach or timed out waiting for Teams endpoints | Check firewall and proxy rules for Teams endpoints |
+| **Launch failure** — script error | User signs out of Teams and back in |
+| **Launch failure** — unsupported OS version | Update Windows or macOS to a supported version |
+| **Client crash** | Make sure antivirus and DLP tools allow Teams and WebView2 |
+| **Update failure** — root cause undetermined | Force an update, collect Teams and Windows logs, contact support |
+| **VDI optimization failure** | Check the error code against the VDI troubleshooting table |
 
 ### Sign-In Issues
 
@@ -248,14 +273,30 @@ flowchart TD
 | **SSO issues** | Check Entra ID sign-in logs for error codes |
 | **MFA enrollment** | User may need to complete MFA registration |
 
-### Troubleshoot Copilot and AI in Teams
+### Troubleshoot Microsoft 365 Copilot and AI Experiences in Teams
+
+The **Copilot** setting in the meeting policy (**Meetings** → **Meeting policies** → **Recording & transcription**) sets what organizers can choose in their meeting options:
+
+| Policy Value | PowerShell (`-Copilot`) | Organizer's Default |
+|--------------|-------------------------|---------------------|
+| **On** | `Enabled` | **Only during the meeting** — can change to During and after, or Off |
+| **On with saved transcript required** *(default)* | `EnabledWithTranscript` | **During and after the meeting** — can't be changed |
+| **On with transcript saved by default** | `EnabledWithTranscriptDefaultOn` | **During and after the meeting** — can change to Only during, or Off |
+| **Off** | `Disabled` | **Off** — can change to Only during, or During and after |
+
+- **Only during the meeting** uses temporary speech-to-text data that isn't saved after the meeting
+- **During and after the meeting** needs someone to **start transcription**
+- When an organizer sets Copilot to **Off** for a meeting, **recording and transcription are also turned off**
 
 | Issue | Check |
 |-------|-------|
-| **Copilot not available** | Verify Microsoft 365 Copilot license assigned |
-| **No meeting recap** | Check that **transcription is enabled** in meeting policy |
-| **Copilot disabled in policy** | Review meeting policy Copilot settings |
-| **Poor Copilot output** | Ensure meeting had **transcription running** during the meeting |
+| **Copilot not available at all** | User has a **Microsoft 365 Copilot** license |
+| **Copilot missing in one meeting** | Meeting is **end-to-end encrypted** (Copilot isn't supported) or the organizer set Copilot to **Off** |
+| **Copilot works only during the meeting** | Meeting option is **Only during the meeting** — start a transcript to keep Copilot available afterward |
+| **Copilot can't be used although the policy allows it** | Transcription policy is **Off** and the option is **During and after the meeting** — someone allowed to transcribe must start transcription |
+| **No intelligent recap** | User has **Teams Premium** or **Microsoft 365 Copilot**, and **transcription** is allowed; allow **recording** too for the full recap (speakers, topics, chapters) |
+| **Recap missing with no transcript** | **Intelligent recap without saving transcripts** works for **scheduled meetings** only, needs a Copilot license, and can be turned off with `-AllowIntelligentRecap` |
+| **Facilitator missing** | Copilot license, Facilitator availability on **Teams apps** → **Built-in Teams agents**, and **Loop experiences in Teams** turned on |
 
 ### Meeting Join and Feature Issues
 
@@ -269,11 +310,14 @@ flowchart TD
 | **Lobby issues** | Review meeting policy lobby bypass settings |
 
 > **⚠️ Exam Caveat:**
-> - **Debug logs** are generated by pressing **Ctrl+Alt+Shift+1** — know this keyboard shortcut
+> - **Collect support files** (or **Ctrl+Alt+Shift+1** on Windows, **Option+Command+Shift+1** on Mac) saves the client logs to the **Downloads** folder — know these shortcuts
 > - **Self-help diagnostics** are in the **M365 admin center**, not the Teams admin center
-> - **Cache clearing** resolves many client issues — it's a standard first troubleshooting step
+> - **Clearing the cache is NOT a first step** — it doesn't fix chat or channel problems and it deletes the logs support needs; **collect logs first**
+> - New Teams keeps its cache under `…\Packages\MSTeams_8wekyb3d8bbwe\…` — the classic `%appdata%\Microsoft\Teams` path is for the retired classic client
 > - **Sign-in log analysis** should be done in **Entra admin center** → Sign-in logs
-> - **Copilot requires transcription** — if transcription is disabled by policy, Copilot cannot function in meetings
+> - **Copilot doesn't always need a saved transcript** — **Only during the meeting** uses temporary speech-to-text; a transcript is needed only to use Copilot **after** the meeting
+> - **Copilot isn't available in end-to-end encrypted meetings**
+> - **Teams client health** is in the **Teams admin center**; **self-help diagnostics** are in the **M365 admin center**
 
 ---
 
@@ -287,10 +331,14 @@ flowchart TD
 | Find out which Teams apps are most used | **Usage reports** → App usage |
 | Investigate who deleted a team | **Audit log** in Microsoft Purview — search TeamDeleted |
 | User cannot sign in to Teams on a new device | Check **Conditional Access** policies + **Teams license** |
-| Teams client is slow and glitchy | **Clear Teams client cache** |
-| Generate a debug log for Microsoft support | Press **Ctrl+Alt+Shift+1** in Teams |
+| User still sees a colleague's old display name or photo | Client caches it (names up to **28 days**, photos up to **60 days**) — **sign out and back in**, or clear the Teams client cache |
+| A user's chat history won't load | **Don't clear the cache** — collect the client logs and escalate |
+| Collect client logs for Microsoft support | Teams icon in the system tray → **Collect support files** (or **Ctrl+Alt+Shift+1**) — logs land in **Downloads** |
 | CQD shows poor quality for a specific building | Upload **building/subnet data** to CQD, then filter by building |
-| Copilot doesn't show meeting recap | Verify **transcription** is enabled in the meeting policy |
+| Intelligent recap doesn't appear | Verify a **Teams Premium** or **Copilot** license and that **transcription** is allowed in the meeting policy |
+| Copilot is greyed out in one meeting only | Check for **end-to-end encryption** or the organizer setting Copilot to **Off** |
+| Teams fails to launch on many devices | **Teams client health** dashboard → Issues → check the **Insight** |
+| Need logs from a user's client without disturbing them | User's **Client health** tab → **Request client logs** |
 
 ---
 

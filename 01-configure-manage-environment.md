@@ -19,7 +19,7 @@ mermaid: true
 mindmap
   root((Domain 1 40–45%))
     Network Settings
-      Network Planner
+      Teams Network Planner
       Bandwidth Calculation
       Ports & Protocols
       Assessment Tool
@@ -60,16 +60,35 @@ mindmap
 
 ## 🌐 1.1 Plan Network Settings for Teams
 
-### Network Planner
+### Bandwidth Requirements
 
-The **Network Planner** in the Teams admin center helps calculate bandwidth requirements based on the number of users, locations, and expected usage scenarios.
+Teams adapts to the network, and when bandwidth runs short it **prioritizes audio over video**. It can deliver HD video in **under 1.5 Mbps**.
+
+Values are **per endpoint**, in **kbps up/down**. A user who joins from a laptop and a phone counts as two endpoints.
+
+| Modality | Minimum | Recommended | Best Performance |
+|----------|---------|-------------|------------------|
+| **Audio** (1:1 or meeting) | 10/10 | 58/58 | 76/76 |
+| **Video** (1:1) | 150/150 | 1,500/1,500 | 4,000/4,000 |
+| **Video** (meeting) | 150/200 | 2,500/4,000 | 4,000/4,000 |
+| **Screen sharing** (1:1) | 200/200 | 1,500/1,500 | 4,000/4,000 |
+| **Screen sharing** (meeting) | 250/250 | 2,500/2,500 | 4,000/4,000 |
+
+**Events optimized for a large audience** (live streaming): without an **eCDN**, plan about **2 Mbps per viewer** at each location (**3 Mbps** for 1080p). For sites with many viewers, Microsoft recommends an eCDN.
+
+### Teams Network Planner
+
+The **Network Planner** (Teams admin center → **Planning** → **Network planner**) calculates the network requirements for Teams and cloud voice across your physical locations. It needs the **Global Administrator**, **Teams Administrator** or **Teams Communications Administrator** role.
 
 | Step | Action |
 |------|--------|
-| 1 | Add **network sites** (office locations) with user counts |
-| 2 | Define a **network plan** linking sites |
-| 3 | Select **personas** — profiles describing usage patterns (audio, video, screen sharing) |
-| 4 | Run the report to see **bandwidth impact per site** |
+| 1 | Add a **network plan** (name and description) |
+| 2 | Add **network sites** to the plan: user count, WAN capacity, internet egress (local/remote), PSTN egress (none/local/remote) |
+| 3 | Use the recommended **personas** (office worker, remote worker, Teams Rooms system) or create up to **3 custom personas** |
+| 4 | Start a report, distribute each site's users across personas (default **80% office / 20% remote**) and **generate the report** |
+| 5 | Review **bandwidth per modality and per site**; links that need more bandwidth are highlighted in red, with recommendations |
+
+You must enter **WAN and internet capacity** for a site to get specific bandwidth recommendations in the report.
 
 ### Microsoft Teams Network Assessment Tool
 
@@ -85,6 +104,7 @@ An online tool at **connectivity.office.com** that evaluates:
 - DNS resolution quality
 - TCP and UDP connectivity
 - Exchange, SharePoint, and Teams-specific tests
+- Teams media tests from a **10-second test audio call**: UDP connectivity, **packet loss < 1%**, **latency < 100 ms**, **jitter < 30 ms** to pass
 
 ### Key Ports and Protocols
 
@@ -97,9 +117,11 @@ An online tool at **connectivity.office.com** that evaluates:
 
 > **⚠️ Exam Caveat:**
 > - **UDP 3478–3481** must be open for optimal media quality — if blocked, Teams falls back to TCP 443 with degraded quality
-> - **Network Planner** = capacity planning (how much bandwidth do I need?)
-> - **Network Assessment Tool** = connectivity testing (can I reach Microsoft's servers with acceptable quality?)
-> - Know the **quality thresholds**: latency < 50 ms, jitter < 30 ms, packet loss < 1%
+> - **Teams Network Planner** = capacity planning (how much bandwidth do I need?)
+> - **Network Assessment Tool** and **network connectivity test** = readiness and connectivity testing (can I reach Microsoft's servers with acceptable quality?)
+> - Know the **connectivity test thresholds**: latency < 100 ms, jitter < 30 ms, packet loss < 1%
+> - Bandwidth figures are **per endpoint**; when bandwidth is short, Teams keeps **audio** quality and lowers **video** first
+> - Large-audience **events** without an eCDN need about **2 Mbps per viewer** per location
 
 ---
 
@@ -338,6 +360,20 @@ flowchart TD
 | **Existing guests** | Only guests already in directory |
 | **Only people in your organization** | No external sharing |
 
+### Remove Guests from Teams
+
+Removing a guest **from a team** and removing them **from the tenant** are different actions:
+
+| Scope | Where | Result |
+|-------|-------|--------|
+| **One team** | Team owner in Teams (**Manage team** → **Members**), **Teams admin center** → Teams → Manage teams → team → **Members**, or `Remove-TeamUser -GroupId <id> -User <guest UPN>` | Guest loses access to that team and its Microsoft 365 group. The **guest account stays** in Entra ID, along with any other teams it belongs to |
+| **The whole tenant** | **M365 admin center** → Users → **Guest users** → Delete a user, or **Entra admin center** → Users → Delete | Guest account is deleted, so the guest loses access to **every** team, group, and shared file. It can be restored from **Deleted users** for **30 days** |
+| **Inactive guests at scale** | **Entra admin center** → ID Governance → inactive guest report and **access reviews** of guest users | Guests who haven't signed in for a set number of days can be **blocked for 30 days, then deleted** (requires **Microsoft Entra ID Governance** or **Microsoft Entra Suite**) |
+
+- A guest who **leaves a team** in Teams is still in your directory — an admin must delete the account to remove them from the tenant
+- A guest can also **leave your organization** from the **Organizations** page of their My Account, if your **External user leave settings** (Entra admin center → External Identities → External collaboration settings) allow it — the account is soft-deleted for 30 days
+- **Turning guest access off** in the Teams admin center blocks guests from their teams but **doesn't remove them** — they stay in member lists until owners remove them
+
 ### Shared Channels
 
 Allow collaboration with **external users without adding them as guests**:
@@ -368,6 +404,7 @@ For organizations with **multiple Entra ID tenants** (e.g., after mergers):
 > - **Shared channels** use **B2B direct connect**, NOT traditional guest access
 > - **SharePoint sharing settings** can block file sharing in Teams even if Teams guest access is enabled
 > - Guest access must be enabled in **multiple portals** — disabling in any one can block it
+> - **Removing a guest from a team** doesn't delete the guest account — delete it in the **M365** or **Entra admin center** to remove the guest from the tenant and every team
 > - **Domain allow/deny lists** for external access can now be scoped to **specific users and groups**, not just tenant-wide
 
 ---
@@ -425,7 +462,8 @@ For organizations with **multiple Entra ID tenants** (e.g., after mergers):
 
 | Scenario | Answer |
 |----------|--------|
-| Need to assess bandwidth for a new office | **Network Planner** in Teams admin center |
+| Need to assess bandwidth for a new office | **Teams Network Planner** in Teams admin center |
+| Branch office with 200 viewers will stream a town hall, no eCDN | Plan about **400 Mbps** (2 Mbps × 200), or deploy an **eCDN** |
 | Test UDP connectivity to Microsoft relays | **Microsoft Teams Network Assessment Tool** |
 | Block specific sensitive info in Teams chats | **DLP policy** in Microsoft Purview |
 | Prevent two departments from chatting | **Information barrier** policies |
@@ -433,6 +471,8 @@ For organizations with **multiple Entra ID tenants** (e.g., after mergers):
 | Allow external users in a shared channel | **B2B direct connect** cross-tenant access settings |
 | Set teams to expire if inactive | **M365 group expiration policy** in Entra admin center |
 | Let an external partner join a team as a member | **Guest access** (B2B) |
+| Remove a guest from every team at once | **Delete the guest account** — M365 admin center → **Guest users**, or Entra admin center |
+| Automatically remove guests who stop signing in | **Access review** of inactive guest users (Microsoft Entra ID Governance) |
 | Let a user chat with someone in another org | **External access** (federation) |
 | Deploy settings to 50 Teams phones at once | **Configuration profiles** in Teams admin center |
 
