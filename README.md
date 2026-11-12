@@ -152,7 +152,7 @@ The site is continuously updated and based on my personal study notes and experi
 
 ## 🐞 Spotted a Mistake?
 
-Microsoft Teams changes fast, so if something here is wrong or out of date, please [report an issue](https://github.com/marcogrimaldi29/ms-700-study-notes/issues).
+Microsoft Teams changes fast, so if something here is wrong or out of date, please [report an issue](https://github.com/marcogrimaldi29/ms-700-study-notes/issues). The [contributing guide](.github/CONTRIBUTING.md) explains what to check first, what makes a report quick to fix and what's out of scope.
 
 ---
 
