@@ -191,6 +191,8 @@ Get-CsOnlineUser -Filter {Department -eq "Sales"} | Grant-CsTeamsMeetingPolicy -
 | "App permission policies control who can use each app" | **Outdated** — **app centric management** (app assignments) replaced them |
 | "Use a connector to post webhook alerts to a channel" | **False** — Office 365 connectors were **retired in May 2026**; use **Workflows** |
 | "Information barriers use group membership" | **False** — IB uses **user segments** based on Entra ID attributes |
+| "Removing a guest from a team removes them from the tenant" | **False** — the guest account stays in Entra ID until an admin deletes it |
+| "Clear the Teams cache first for any client problem" | **False** — it's a targeted fix; for chat or channel problems it deletes the logs support needs |
 
 ---
 

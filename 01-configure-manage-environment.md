@@ -360,6 +360,20 @@ flowchart TD
 | **Existing guests** | Only guests already in directory |
 | **Only people in your organization** | No external sharing |
 
+### Remove Guests from Teams
+
+Removing a guest **from a team** and removing them **from the tenant** are different actions:
+
+| Scope | Where | Result |
+|-------|-------|--------|
+| **One team** | Team owner in Teams (**Manage team** → **Members**), **Teams admin center** → Teams → Manage teams → team → **Members**, or `Remove-TeamUser -GroupId <id> -User <guest UPN>` | Guest loses access to that team and its Microsoft 365 group. The **guest account stays** in Entra ID, along with any other teams it belongs to |
+| **The whole tenant** | **M365 admin center** → Users → **Guest users** → Delete a user, or **Entra admin center** → Users → Delete | Guest account is deleted, so the guest loses access to **every** team, group, and shared file. It can be restored from **Deleted users** for **30 days** |
+| **Inactive guests at scale** | **Entra admin center** → ID Governance → inactive guest report and **access reviews** of guest users | Guests who haven't signed in for a set number of days can be **blocked for 30 days, then deleted** (requires **Microsoft Entra ID Governance** or **Microsoft Entra Suite**) |
+
+- A guest who **leaves a team** in Teams is still in your directory — an admin must delete the account to remove them from the tenant
+- A guest can also **leave your organization** from the **Organizations** page of their My Account, if your **External user leave settings** (Entra admin center → External Identities → External collaboration settings) allow it — the account is soft-deleted for 30 days
+- **Turning guest access off** in the Teams admin center blocks guests from their teams but **doesn't remove them** — they stay in member lists until owners remove them
+
 ### Shared Channels
 
 Allow collaboration with **external users without adding them as guests**:
@@ -390,6 +404,7 @@ For organizations with **multiple Entra ID tenants** (e.g., after mergers):
 > - **Shared channels** use **B2B direct connect**, NOT traditional guest access
 > - **SharePoint sharing settings** can block file sharing in Teams even if Teams guest access is enabled
 > - Guest access must be enabled in **multiple portals** — disabling in any one can block it
+> - **Removing a guest from a team** doesn't delete the guest account — delete it in the **M365** or **Entra admin center** to remove the guest from the tenant and every team
 > - **Domain allow/deny lists** for external access can now be scoped to **specific users and groups**, not just tenant-wide
 
 ---
@@ -456,6 +471,8 @@ For organizations with **multiple Entra ID tenants** (e.g., after mergers):
 | Allow external users in a shared channel | **B2B direct connect** cross-tenant access settings |
 | Set teams to expire if inactive | **M365 group expiration policy** in Entra admin center |
 | Let an external partner join a team as a member | **Guest access** (B2B) |
+| Remove a guest from every team at once | **Delete the guest account** — M365 admin center → **Guest users**, or Entra admin center |
+| Automatically remove guests who stop signing in | **Access review** of inactive guest users (Microsoft Entra ID Governance) |
 | Let a user chat with someone in another org | **External access** (federation) |
 | Deploy settings to 50 Teams phones at once | **Configuration profiles** in Teams admin center |
 
